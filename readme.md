@@ -12,7 +12,7 @@ Some ATMs or Banks may be missing. Alert me to them and I'll add them asap.
   - Stores bank cash seperately
   - Limit giving cash to nearby player
   - 69 ATM Locations
-  - 6 Bank Locations
+  - 7 Bank Locations
   - Withdraw cash from ATM
   - Withdraw cash from bank
   - Deposit cash at bank
@@ -86,8 +86,8 @@ Some ATMs might be missing. If you find one please inform me so I can include it
 
 
 #### Upcoming
-  - Ability to Rob Banks
   - Multiple Personal Accounts
   - Savings Accounts (With Interest)
   - Business Accounts
   - Shared Accounts (Couples, Spouses, etc.)
+  - Show bank balance in top corner
