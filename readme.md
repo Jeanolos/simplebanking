@@ -86,8 +86,8 @@ Some ATMs might be missing. If you find one please inform me so I can include it
 
 
 #### Upcoming
-  - Ability to Rob Banks
   - Multiple Personal Accounts
   - Savings Accounts (With Interest)
   - Business Accounts
   - Shared Accounts (Couples, Spouses, etc.)
+  - Show bank balance in top corner
