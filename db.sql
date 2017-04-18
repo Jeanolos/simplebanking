@@ -1,0 +1,1 @@
+ALTER TABLE users ADD COLUMN bankbalance INT DEFAULT 0;
