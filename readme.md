@@ -12,7 +12,7 @@ Some ATMs or Banks may be missing. Alert me to them and I'll add them asap.
   - Stores bank cash seperately
   - Limit giving cash to nearby player
   - 69 ATM Locations
-  - 6 Bank Locations
+  - 7 Bank Locations
   - Withdraw cash from ATM
   - Withdraw cash from bank
   - Deposit cash at bank
