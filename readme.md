@@ -74,6 +74,11 @@ cash from ATMs or in Banks.
 ##### depositAnywhere (Default: false)
 Similar to the withdrawAnywhere setting. This option allows players to deposit cash into their bank
 account from anywhere. By default the player must be in 1 of the 6 bank stores.
+##### displayBankBlips (Default: true)
+Displays the locations of banks on the map. Default to show markers on map.
+##### displayAtmBlips (Default: false)
+Displays the locations of atms on the map. Default to hide markers on map. I do not recommend using this
+option it is very ugly and clutters the map. Some icons overlap because some locations have more than one atm.
 
 #### Note
 This is the initial release, some bugs may still be present. Please report them and I will fix them.
