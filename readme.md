@@ -30,21 +30,31 @@ cash from that stored safely away!
 ### Usage
 ##### /checkbalance
 Example: /checkbalance
+
+
 Returns the players current account balance. ***By default can be used anywhere (like using a mobile app)***
 
 ##### /withdraw [amount]
 Example: /withdraw 50
+
+
 Withdraws the specified amount from the players bank account. ***By default can only be used at ATMs or
 banks.***
 ##### /deposit [amount]
 Example: /deposit 50
+
+
 Deposits the specified amount from the players bank account. ***By default can only be used inside banks.***
 ##### /transfer [id] [amount]
 Example: /transfer 17 2000
+
+
 Transfers money from the players bank account to the recipients bank account. ***By default can be used anywhere
 (like using a mobile app)***
 ##### /givecash [id] [amount]
 Example: /givecash 17 20
+
+
 Transfers money from the players ***wallet*** to the recipients wallet. ***By default can be used anywhere
 as long as the recipient is within 5 Meters***
 
