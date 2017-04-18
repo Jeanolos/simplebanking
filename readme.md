@@ -1,8 +1,10 @@
 # Simple Banking
 
 Simple banking is a lua script that allows you to include a banking system in your server. This system uses
-EssentialMod cash, and a seperate bank balance field in the database, to allow the player to seperate 'on-character'
+EssentialMod cash, and a seperate bank balance column in the database, to allow the player to seperate 'on-character'
 cash from that stored safely away!
+
+Some ATMs or Banks may be missing. Alert me to them and I'll add them asap.
 
 ##### Requires EssentialMod
 
