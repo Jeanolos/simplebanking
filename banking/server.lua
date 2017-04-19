@@ -131,7 +131,7 @@ TriggerEvent('es:addCommand', 'givecash', function(source, args, user)
     amount = tonumber(args[3])
     TriggerClientEvent('bank:givecash', source, toPlayer, amount)
 	else
-    TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Use format /transfer [id] [amount]^0")
+    TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Use format /givecash [id] [amount]^0")
     return false
   end
 end)
@@ -142,7 +142,7 @@ AddEventHandler('bank:givecash', function(toPlayer, amount)
 		if (tonumber(user.money) >= tonumber(amount)) then
 			local player = user.identifier
 			user:removeMoney(amount)
-			TriggerEvent('es:getPlayerFromId', source, function(recipient)
+			TriggerEvent('es:getPlayerFromId', toPlayer, function(recipient)
 				recipient:addMoney(amount)
 				TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "Maze Bank", false, "Gave cash: ~r~-$".. amount .." ~n~~s~Wallet: ~g~$" .. user.money)
 				TriggerClientEvent("es_freeroam:notify", toPlayer, "CHAR_BANK_MAZE", 1, "Maze Bank", false, "Received cash: ~g~$".. amount .." ~n~~s~Wallet: ~g~$" .. recipient.money)

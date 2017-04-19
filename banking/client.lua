@@ -175,7 +175,13 @@ end)
 RegisterNetEvent('bank:givecash')
 AddEventHandler('bank:givecash', function(toPlayer, amount)
   if(IsNearPlayer(toPlayer) == true or giveCashAnywhere == true) then
-    TriggerServerEvent("bank:givecash", toPlayer, tonumber(amount))
+    local player2 = GetPlayerFromServerId(toPlayer)
+    local playing = IsPlayerPlaying(player2)
+    if (playing ~= false) then
+      TriggerServerEvent("bank:givecash", toPlayer, tonumber(amount))
+    else
+      TriggerEvent('chatMessage', "", {255, 0, 0}, "^1This player is not online!");
+    end
   else
     TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You are not near this player!");
   end
