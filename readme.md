@@ -9,6 +9,7 @@ Some ATMs or Banks may be missing. Alert me to them and I'll add them asap.
 ##### Requires EssentialMod
 
 ### Features
+  - UI to show bank balance
   - Stores bank cash seperately
   - Limit giving cash to nearby player
   - 69 ATM Locations
@@ -27,6 +28,7 @@ Some ATMs or Banks may be missing. Alert me to them and I'll add them asap.
   - Add '- banking' to AutoStartResources in citmp-server.yml
   - Import 'db.sql' into EssentialMod database
   - Change database settings on line 2 of server.lua
+  - Change options in client.lua file to meet your needs
   - Start / Restart server
 
 ### Usage
@@ -90,4 +92,3 @@ Some ATMs might be missing. If you find one please inform me so I can include it
   - Savings Accounts (With Interest)
   - Business Accounts
   - Shared Accounts (Couples, Spouses, etc.)
-  - Show bank balance in top corner

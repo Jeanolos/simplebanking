@@ -197,3 +197,29 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
     TriggerEvent('chatMessage', "", {255, 0, 0}, "^1This player is not online!");
   end
 end)
+
+-- Methods to update UI
+RegisterNetEvent('banking:updateBalance')
+AddEventHandler('banking:updateBalance', function(balance)
+	SendNUIMessage({
+		updateBalance = true,
+		balance = balance
+	})
+end)
+
+RegisterNetEvent("banking:addBalance")
+AddEventHandler("banking:addBalance", function(amount)
+	SendNUIMessage({
+		addBalance = true,
+		amount = amount
+	})
+
+end)
+
+RegisterNetEvent("banking:removeBalance")
+AddEventHandler("banking:removeBalance", function(amount)
+	SendNUIMessage({
+		removeBalance = true,
+		amount = amount
+	})
+end)
