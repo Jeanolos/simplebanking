@@ -186,3 +186,14 @@ AddEventHandler('bank:givecash', function(toPlayer, amount)
     TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You are not near this player!");
   end
 end)
+
+RegisterNetEvent('bank:transfer')
+AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
+  local player2 = GetPlayerFromServerId(toPlayer)
+  local playing = IsPlayerPlaying(player2)
+  if (playing ~= false) then
+    TriggerServerEvent("bank:transfer", fromPlayer, toPlayer, tonumber(amount))
+  else
+    TriggerEvent('chatMessage', "", {255, 0, 0}, "^1This player is not online!");
+  end
+end)

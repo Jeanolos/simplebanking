@@ -94,10 +94,15 @@ TriggerEvent('es:addCommand', 'transfer', function(source, args, user)
     fromPlayer = tonumber(source)
     toPlayer = tonumber(args[2])
     amount = tonumber(args[3])
+    TriggerClientEvent('bank:transfer', source, fromPlayer, toPlayer, amount)
 	else
     TriggerClientEvent('chatMessage', source, "", {0, 0, 200}, "^1Use format /transfer [id] [amount]^0")
     return false
   end
+end)
+
+RegisterServerEvent('bank:transfer')
+AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
   TriggerEvent('es:getPlayerFromId', fromPlayer, function(user)
       local player = user.identifier
       local bankbalance = bankBalance(player)
