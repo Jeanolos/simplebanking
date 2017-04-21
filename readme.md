@@ -9,6 +9,7 @@ Some ATMs or Banks may be missing. Alert me to them and I'll add them asap.
 ##### Requires EssentialMod
 
 ### Features
+  - Full GUI system
   - UI to show bank balance
   - Stores bank cash seperately
   - Limit giving cash to nearby player
@@ -31,7 +32,10 @@ Some ATMs or Banks may be missing. Alert me to them and I'll add them asap.
   - Change options in client.lua file to meet your needs
   - Start / Restart server
 
-### Usage
+### GUI Usage
+Press the Context Action key (Default: E) when near an ATM or in a bank.
+
+### Command Usage
 #### /checkbalance
 Example: /checkbalance
 
@@ -81,10 +85,12 @@ Displays the locations of banks on the map. Default to show markers on map.
 ##### displayAtmBlips (Default: false)
 Displays the locations of atms on the map. Default to hide markers on map. I do not recommend using this
 option it is very ugly and clutters the map. Some icons overlap because some locations have more than one atm.
+##### enableBankingGui (Default: true)
+Enables the GUI system for banks and ATMs. SET THIS TO FALSE IF YOU ARE HAVING ISSUES WITH THE GUI. CHAT COMMANDS
+STILL WORK.
 
 #### Note
-This is the initial release, some bugs may still be present. Please report them and I will fix them.
-Some ATMs might be missing. If you find one please inform me so I can include it in the next release.
+For 2.0 I suggest a complete re-install of simple banking. (Apart from the SQL bit, that hasn't changed.)
 
 
 #### Upcoming

@@ -5,6 +5,7 @@ local withdrawAnywhere = false -- Allows the player to withdraw cash from bank a
 local depositAnywhere = false -- Allows the player to deposit cash into bank account anywhere (Default: false)
 local displayBankBlips = true -- Toggles Bank Blips on the map (Default: true)
 local displayAtmBlips = false -- Toggles ATM blips on the map (Default: false) // THIS IS UGLY. SOME ICONS OVERLAP BECAUSE SOME PLACES HAVE MULTIPLE ATM MACHINES. NOT RECOMMENDED
+local enableBankingGui = true -- Enables the banking GUI (Default: true) // MAY HAVE SOME ISSUES
 
 -- ATMS
 local atms = {
@@ -115,13 +116,128 @@ Citizen.CreateThread(function()
   end
 end)
 
+-- NUI Variables
+local atBank = false
+local atATM = false
+local bankOpen = false
+local atmOpen = false
+
+-- Open Gui and Focus NUI
+function openGui()
+  SetNuiFocus(true)
+  SendNUIMessage({openBank = true})
+end
+
+-- Close Gui and disable NUI
+function closeGui()
+  SetNuiFocus(false)
+  SendNUIMessage({openBank = false})
+  bankOpen = false
+  atmOpen = false
+end
+
+-- If GUI setting turned on, listen for INPUT_PICKUP keypress
+if enableBankingGui then
+  Citizen.CreateThread(function()
+    while true do
+      Citizen.Wait(0)
+      if(IsNearBank() or IsNearATM()) then
+        if (atBank == false) then
+          TriggerEvent('chatMessage', "", {0, 255, 0}, "^0Press 'Context Action Key' (Default: E) to activate");
+        end
+        atBank = true
+        if IsControlJustPressed(1, 38)  then -- IF INPUT_PICKUP Is pressed
+          if bankOpen then
+            closeGui()
+            bankOpen = false
+          else
+            openGui()
+            bankOpen = true
+          end
+      	end
+      else
+        if(atmOpen or bankOpen) then
+          closeGui()
+        end
+        atBank = false
+        atmOpen = false
+        bankOpen = false
+      end
+    end
+  end)
+end
+
+-- Disable controls while GUI open
+Citizen.CreateThread(function()
+  while true do
+    if bankOpen or atmOpen then
+      local active = true
+      DisableControlAction(0, 1, active) -- LookLeftRight
+      DisableControlAction(0, 2, active) -- LookUpDown
+      DisableControlAction(0, 142, active) -- MeleeAttackAlternate
+      DisableControlAction(0, 106, active) -- VehicleMouseControlOverride
+      if IsDisabledControlJustReleased(0, 142) then -- MeleeAttackAlternate
+        SendNUIMessage({type = "click"})
+      end
+    end
+    Citizen.Wait(0)
+  end
+end)
+
+-- NUI Callback Methods
+RegisterNUICallback('close', function(data, cb)
+  closeGui()
+  cb('ok')
+end)
+
+RegisterNUICallback('balance', function(data, cb)
+  SendNUIMessage({openSection = "balance"})
+  cb('ok')
+end)
+
+RegisterNUICallback('withdraw', function(data, cb)
+  SendNUIMessage({openSection = "withdraw"})
+  cb('ok')
+end)
+
+RegisterNUICallback('deposit', function(data, cb)
+  SendNUIMessage({openSection = "deposit"})
+  cb('ok')
+end)
+
+RegisterNUICallback('transfer', function(data, cb)
+  SendNUIMessage({openSection = "transfer"})
+  cb('ok')
+end)
+
+RegisterNUICallback('quickCash', function(data, cb)
+  TriggerEvent('bank:withdraw', 100)
+  cb('ok')
+end)
+
+RegisterNUICallback('withdrawSubmit', function(data, cb)
+  TriggerEvent('bank:withdraw', data.amount)
+  cb('ok')
+end)
+
+RegisterNUICallback('depositSubmit', function(data, cb)
+  TriggerEvent('bank:deposit', data.amount)
+  cb('ok')
+end)
+
+RegisterNUICallback('transferSubmit', function(data, cb)
+  local fromPlayer = GetPlayerServerId();
+  TriggerEvent('bank:transfer', tonumber(fromPlayer), tonumber(data.toPlayer), tonumber(data.amount))
+  cb('ok')
+end)
+
 -- Check if player is near an atm
 function IsNearATM()
   local ply = GetPlayerPed(-1)
   local plyCoords = GetEntityCoords(ply, 0)
   for _, item in pairs(atms) do
     local distance = GetDistanceBetweenCoords(item.x, item.y, item.z,  plyCoords["x"], plyCoords["y"], plyCoords["z"], true)
-    if(distance <= 10) then
+    if(distance <= 8) then
       return true
     end
   end
@@ -187,6 +303,7 @@ AddEventHandler('bank:givecash', function(toPlayer, amount)
   end
 end)
 
+-- Process bank transfer if player is online
 RegisterNetEvent('bank:transfer')
 AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
   local player2 = GetPlayerFromServerId(toPlayer)
@@ -198,15 +315,19 @@ AddEventHandler('bank:transfer', function(fromPlayer, toPlayer, amount)
   end
 end)
 
--- Methods to update UI
+-- Send NUI message to update bank balance
 RegisterNetEvent('banking:updateBalance')
 AddEventHandler('banking:updateBalance', function(balance)
+  local id = PlayerId()
+  local playerName = GetPlayerName(id)
 	SendNUIMessage({
 		updateBalance = true,
-		balance = balance
+		balance = balance,
+    player = playerName
 	})
 end)
 
+-- Send NUI Message to display add balance popup
 RegisterNetEvent("banking:addBalance")
 AddEventHandler("banking:addBalance", function(amount)
 	SendNUIMessage({
@@ -216,6 +337,7 @@ AddEventHandler("banking:addBalance", function(amount)
 
 end)
 
+-- Send NUI Message to display remove balance popup
 RegisterNetEvent("banking:removeBalance")
 AddEventHandler("banking:removeBalance", function(amount)
 	SendNUIMessage({
