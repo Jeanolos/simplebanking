@@ -1,5 +1,5 @@
 require "resources/essentialmode/lib/MySQL"
-MySQL:open("ip", "databasename", "username", "password")
+MySQL:open("127.0.0.1", "gta5_gamemode_essential", "gta5_essential", "hhfhdYaLA2h8Ft7u")
 
 -- HELPER FUNCTIONS
 function bankBalance(player)
@@ -24,7 +24,6 @@ end
 TriggerEvent('es:addCommand', 'checkbalance', function(source, args, user)
   TriggerEvent('es:getPlayerFromId', source, function(user)
     local player = user.identifier
-    MySQL:executeQuery("UPDATE users SET `bankbalance`='1' WHERE identifier = '@identifier' AND `group` = 'user'", {['@identifier'] = player})
     local bankbalance = bankBalance(player)
     TriggerClientEvent("es_freeroam:notify", source, "CHAR_BANK_MAZE", 1, "Maze Bank", false, "Your current account balance: ~g~$".. bankbalance)
     TriggerClientEvent("banking:updateBalance", source, bankbalance)
