@@ -16,7 +16,7 @@ html {
 }
 #cursor {
     position: absolute;
-    z-index: 999999;
+    z-index: 99999999;
     display: none;
 }
 .sans {
@@ -103,6 +103,7 @@ h1,h2,h3,h4 {
   margin-right: auto;
   overflow: hidden;
   display: none;
+  z-index: 9999999;
 }
 .header {
   width:100%;
