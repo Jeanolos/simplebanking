@@ -171,9 +171,11 @@ end
 Citizen.CreateThread(function()
   while true do
     if bankOpen or atmOpen then
+      local ply = GetPlayerPed(-1)
       local active = true
       DisableControlAction(0, 1, active) -- LookLeftRight
       DisableControlAction(0, 2, active) -- LookUpDown
+      DisablePlayerFiring(ply, true) -- Disable weapon firing
       DisableControlAction(0, 142, active) -- MeleeAttackAlternate
       DisableControlAction(0, 106, active) -- VehicleMouseControlOverride
       if IsDisabledControlJustReleased(0, 142) then -- MeleeAttackAlternate
