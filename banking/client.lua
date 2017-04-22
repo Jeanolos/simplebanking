@@ -79,6 +79,9 @@ local atms = {
   {name="ATM", id=277, x=289.012, y=-1256.545, z=29.440},
   {name="ATM", id=277, x=295.839, y=-895.640, z=29.217},
   {name="ATM", id=277, x=1686.753, y=4815.809, z=42.008},
+  {name="ATM", id=277, x=-302.408, y=-829.945, z=32.417},
+  {name="ATM", id=277, x=5.134, y=-919.949, z=29.557},
+
 }
 
 -- Banks
@@ -147,12 +150,16 @@ if enableBankingGui then
         end
         atBank = true
         if IsControlJustPressed(1, 38)  then -- IF INPUT_PICKUP Is pressed
-          if bankOpen then
-            closeGui()
-            bankOpen = false
+          if (IsInVehicle()) then
+            TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You cannot use the bank in a vehicle!");
           else
-            openGui()
-            bankOpen = true
+            if bankOpen then
+              closeGui()
+              bankOpen = false
+            else
+              openGui()
+              bankOpen = true
+            end
           end
       	end
       else
@@ -245,6 +252,16 @@ function IsNearATM()
   end
 end
 
+-- Check if player is in a vehicle
+function IsInVehicle()
+  local ply = GetPlayerPed(-1)
+  if IsPedSittingInAnyVehicle(ply) then
+    return true
+  else
+    return false
+  end
+end
+
 -- Check if player is near a bank
 function IsNearBank()
   local ply = GetPlayerPed(-1)
@@ -273,7 +290,11 @@ end
 RegisterNetEvent('bank:deposit')
 AddEventHandler('bank:deposit', function(amount)
   if(IsNearBank() == true or depositAtATM == true and IsNearATM() == true or depositAnywhere == true ) then
-    TriggerServerEvent("bank:deposit", tonumber(amount))
+    if (IsInVehicle()) then
+      TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You cannot use the atm in a vehicle!");
+    else
+      TriggerServerEvent("bank:deposit", tonumber(amount))
+    end
   else
     TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You can only deposit at a bank!");
   end
@@ -283,7 +304,11 @@ end)
 RegisterNetEvent('bank:withdraw')
 AddEventHandler('bank:withdraw', function(amount)
   if(IsNearATM() == true or IsNearBank() == true or withdrawAnywhere == true) then
-    TriggerServerEvent("bank:withdraw", tonumber(amount))
+    if (IsInVehicle()) then
+      TriggerEvent('chatMessage', "", {255, 0, 0}, "^1You cannot use the bank in a vehicle!");
+    else
+      TriggerServerEvent("bank:withdraw", tonumber(amount))
+    end
   else
     TriggerEvent('chatMessage', "", {255, 0, 0}, "^1This is not a bank or an ATM!");
   end
