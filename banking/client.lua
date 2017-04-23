@@ -182,10 +182,11 @@ Citizen.CreateThread(function()
       local active = true
       DisableControlAction(0, 1, active) -- LookLeftRight
       DisableControlAction(0, 2, active) -- LookUpDown
+      DisableControlAction(0, 24, active) -- Attack
       DisablePlayerFiring(ply, true) -- Disable weapon firing
       DisableControlAction(0, 142, active) -- MeleeAttackAlternate
       DisableControlAction(0, 106, active) -- VehicleMouseControlOverride
-      if IsDisabledControlJustReleased(0, 142) then -- MeleeAttackAlternate
+      if IsDisabledControlJustReleased(0, 24) or IsDisabledControlJustReleased(0, 142) then -- MeleeAttackAlternate
         SendNUIMessage({type = "click"})
       end
     end
