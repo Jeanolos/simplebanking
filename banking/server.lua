@@ -1,23 +1,22 @@
-require "resources/essentialmode/lib/MySQL"
-MySQL:open("ip", "databasename", "username", "password")
+local port = 5984 -- Change to CouchDB port
 
 -- HELPER FUNCTIONS
 function bankBalance(player)
-  local executed_query = MySQL:executeQuery("SELECT * FROM users WHERE identifier = '@name'", {['@name'] = player})
-  local result = MySQL:getResults(executed_query, {'bankbalance'}, "identifier")
-  return tonumber(result[1].bankbalance)
+  db.retrieveUser(player, function(user)
+    return tonumber(user.bank)
+  end)
 end
 
 function deposit(player, amount)
   local bankbalance = bankBalance(player)
   local new_balance = bankbalance + amount
-  MySQL:executeQuery("UPDATE users SET `bankbalance`='@value' WHERE identifier = '@identifier'", {['@value'] = new_balance, ['@identifier'] = player})
+  db.updateUser(player, {bank = new_balance}, function(d)end)
 end
 
 function withdraw(player, amount)
   local bankbalance = bankBalance(player)
   local new_balance = bankbalance - amount
-  MySQL:executeQuery("UPDATE users SET `bankbalance`='@value' WHERE identifier = '@identifier'", {['@value'] = new_balance, ['@identifier'] = player})
+  db.updateUser(player, {bank = new_balance}, function(d)end)
 end
 
 function round(num, numDecimalPlaces)
