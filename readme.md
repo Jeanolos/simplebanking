@@ -27,8 +27,6 @@ Some ATMs or Banks may be missing. Alert me to them and I'll add them asap.
   - Download simple banking
   - Put 'banking' folder into your servers 'resources' folder
   - Add '- banking' to AutoStartResources in citmp-server.yml
-  - Import 'db.sql' into EssentialMod database
-  - Change database settings on line 2 of server.lua
   - Change options in client.lua file to meet your needs
   - Start / Restart server
 
